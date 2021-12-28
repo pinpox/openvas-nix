@@ -88,6 +88,11 @@
                 gpgme
                 hiredis
                 libgcrypt
+                p11-kit
+                libselinux
+                libsepol
+                doxygen
+                pcre-cpp
                 freeradius
                 libnet
                 libpcap
@@ -96,6 +101,8 @@
                 libxml2
                 zlib
               ];
+
+              cmakeFlags = [ "-DGVM_RUN_DIR=$out/run/gvm" ];
 
               meta = with lib; {
                 description =
@@ -139,7 +146,7 @@
                 glib
                 gnutls
                 libtasn1
-self.packages.${system}.gvm-libs
+                self.packages.${system}.gvm-libs
                 libssh
                 libpcap
                 libksba
@@ -147,7 +154,14 @@ self.packages.${system}.gvm-libs
                 libgcrypt
                 bison
                 json-glib
+              ];
 
+              cmakeFlags = [ 
+                # "-DGVM_RUN_DIR=$out/run/gvm" 
+                "-DLOCALSTATEDIR=$out/var"
+                "-DSYSCONFDIR=$out/etc"
+                "-DOPENVAS_RUN_DIR=$out/run/ospd"
+                "-DOPENVAS_FEED_LOCK_PATH=$out/var/lib/openvas/feed-update.lock"
               ];
 
               meta = with lib; {
